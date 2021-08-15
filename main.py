@@ -14,7 +14,8 @@ from PIL import ImageGrab
 from utils import *
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
-path = 'c:/Users/Sir-Lord/Documents/GitHub/highlight-service-v1/public/uploads\\'+ str(sys.argv[1])
+# path = 'c:/Users/Sir-Lord/Documents/GitHub/highlight-service-v1/public/uploads\\'+ str(sys.argv[1])
+path = 'highlight_1.JPG'
 # fullpath = path + str(sys.argv[1])
 
 img = cv2.imread(path)
