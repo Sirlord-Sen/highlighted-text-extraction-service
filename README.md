@@ -1,0 +1,2 @@
+# highlighted-text-extraction-service
+ 
