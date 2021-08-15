@@ -4,10 +4,13 @@ import numpy as np
 
 def detectColor(img, hsv):
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    # cv2.imshow("imgResult", imgHSV)
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
     mask = cv2.inRange(imgHSV, lower, upper)
+    # cv2.imshow("imgResult", mask)
     imgMask = cv2.bitwise_and(img, img, mask=mask)
+    # cv2.imshow("imgResult", imgMask)
     imgResult = cv2.bitwise_and(imgMask, imgMask, mask=mask)
     # cv2.imshow("imgResult", imgResult)
     return imgResult
@@ -46,11 +49,12 @@ def getContours(img, imgDraw, cThr=[100, 100], showCanny=False, minArea=1000, fi
     finalContours = sorted(finalContours, key=lambda x: x[1], reverse=True)
     if draw:
         for con in finalContours:
-            # print('con', con[2])
+            # print('con', con[3])
             x, y, w, h = con[3]
             # cv2.imshow('copy', imgCopy)
             cv2.rectangle(imgCopy, (x, y), (x + w, y + h), (255, 0, 255), 2)
             cv2.drawContours(imgDraw, con[4], -1,(0,0,255), 2)
+        # cv2.imshow("Things" ,imgDraw)
     return imgCopy, finalContours
 
 def getRoi(img, contours):

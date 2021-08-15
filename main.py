@@ -15,10 +15,14 @@ from utils import *
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 # path = 'c:/Users/Sir-Lord/Documents/GitHub/highlight-service-v1/public/uploads\\'+ str(sys.argv[1])
-path = 'highlight_1.JPG'
+path = 'images/highlights.PNG'
 # fullpath = path + str(sys.argv[1])
 
 img = cv2.imread(path)
+# imgdf = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+# img = cv2.cvtColor(imgdf, cv2.COLOR_GRAY2BGR)
+# imgHSV = cv2.cvtColor(imgRGB, cv2.COLOR_BGR2HSV)
+# cv2.imshow("Things", imgHSV)
 # cv2.imshow('image', img)
 # print(img)
 
@@ -39,6 +43,7 @@ img = cv2.imread(path)
 
 # while True:
 #     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+#     # imgHSV = cv2.cvtColor(imgRGB, cv2.COLOR_BGR2HSV)
 #     h_min = cv2.getTrackbarPos("Hue Min", "TrackBars")
 #     h_max = cv2.getTrackbarPos("Hue Max", "TrackBars")
 #     s_min = cv2.getTrackbarPos("Sat Min", "TrackBars")
@@ -54,32 +59,34 @@ img = cv2.imread(path)
 
 # #     # cv2.imshow("original", img)
 # #     # cv2.imshow("HSV", imgHSV)
-#     # cv2.imshow("mask", cv2.resize(mask, (700, 450)))
-#     print(pytesseract.image_to_string(imgResult))
+#     cv2.imshow("mask", cv2.resize(mask, (700, 450)))
+#     # print(pytesseract.image_to_string(imgResult))
 #     # cv2.imshow('imgResult', imgResult)
 #     cv2.waitKey(1)
 
 # # hsv = [0, 109, 159, 255, 176, 255]
 hsv = [0, 179, 49, 255, 183, 255]
+# hsv = [0, 179, 0, 255, 160, 250]
 
-# # # # # #### Step 2 ####
+#### Step 2 ####
 imgResult = detectColor(img, hsv)
 
 
 
-# # # # # #### Step 3 & 4 ####
+#### Step 3 & 4 ####
 imgContours, contours = getContours(imgResult, img, showCanny=False, minArea=1000, filter=4, cThr=[250, 250], draw=True)
 
-# # # # cv2.imshow('imgContours', imgContours)
+# cv2.imshow('imgContours', imgContours)
 # print('No. of Highlights:', len(contours))
 
-# # # # # #### Step 5 ####
+#### Step 5 ####
 roiList = getRoi(imgContours, contours)
 roiDisplay(roiList)
 
-# # # # # # #### Step 6 ####
+# # # # # # # #### Step 6 ####
 highlightedText = []
 for x, roi in enumerate(roiList):
+    #  cv2.imshow(str(x),roi)
     highlightedText.append(pytesseract.image_to_string(roi, lang='eng', config='--psm 6'))
 print(highlightedText)
 # saveText(highlightedText)
