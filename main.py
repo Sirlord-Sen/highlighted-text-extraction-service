@@ -15,7 +15,7 @@ from utils import *
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 # path = 'c:/Users/Sir-Lord/Documents/GitHub/highlight-service-v1/public/uploads\\'+ str(sys.argv[1])
-path = 'images/highlights.PNG'
+path = 'images/highlight_1.png'
 # fullpath = path + str(sys.argv[1])
 
 img = cv2.imread(path)
@@ -89,9 +89,7 @@ for x, roi in enumerate(roiList):
     #  cv2.imshow(str(x),roi)
     highlightedText.append(pytesseract.image_to_string(roi, lang='eng', config='--psm 6'))
 print(highlightedText)
-# saveText(highlightedText)
-
-
+saveText(highlightedText)
 
 cv2.waitKey(0)
 
