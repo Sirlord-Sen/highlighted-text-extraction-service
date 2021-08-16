@@ -62,7 +62,7 @@ def roiDisplay(roiList):
         # cv2.imshow(str(x),roi)
         
 def saveText(highlightedText):
-    with open('static/highlightedText.csv', 'w') as f:
+    with open('app/static/highlightedText.csv', 'w') as f:
         for text in highlightedText:
             f.writelines(f'\n{text}')
 

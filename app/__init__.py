@@ -1,24 +1,13 @@
-import os
-from flask import Flask, jsonify, request
-from datetime import datetime
+from flask import Flask
+from config.config import config_by_name
 
-from textdetect import textdetect as td
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config['JSON_SORT_KEYS'] = False
+    app.config.from_object(config_by_name[config_name])
 
-app = Flask(__name__)
+    from app.highlight.controllers import api as textdetect_route
 
-@app.route('/detectText', methods = ['POST'])
-def save_image():
-    now = datetime.now()
-    image_data = request.files['image']
-    user = request.form['user_id']
-    topic = request.form['topic_id']
-    current_time = now.strftime("%b-%d-%Y_%H-%M-%S")
-    img_path = os.path.abspath('static\images')
-    img_title = f"{user}_{topic}_{current_time}.jpg"
-    image_data.save(f"{img_path}/{img_title}")
+    app.register_blueprint(textdetect_route)
 
-    highlightedText = td.text_detect(img_title)
-    return jsonify({'msg': "success", "text": highlightedText})
-
-if  __name__ == '__main__':
-    app.run(debug=True)
+    return app

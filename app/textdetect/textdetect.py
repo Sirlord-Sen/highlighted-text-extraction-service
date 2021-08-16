@@ -9,9 +9,9 @@ from .utils import *
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 def text_detect(img_title):
-    img_path = os.path.abspath('static\images')
+    img_path = os.path.abspath('app\static\images')
     path = f'{img_path}/{img_title}'
-    # print(path)
+
     img = cv2.imread(path)
 
     # HSV value for Yellow Highlight
