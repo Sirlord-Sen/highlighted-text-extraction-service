@@ -1,0 +1,15 @@
+# compiled output
+node_modules/
+env/
+
+# Python Cache
+__pycache__
+
+# IDE - VSCode
+.vscode/
+
+# os
+.env
+
+#Personal
+Trackbars.py

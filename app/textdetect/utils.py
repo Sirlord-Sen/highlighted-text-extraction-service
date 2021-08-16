@@ -1,18 +1,13 @@
 import cv2
 import numpy as np
 
-
 def detectColor(img, hsv):
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    # cv2.imshow("imgResult", imgHSV)
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
     mask = cv2.inRange(imgHSV, lower, upper)
-    # cv2.imshow("imgResult", mask)
     imgMask = cv2.bitwise_and(img, img, mask=mask)
-    # cv2.imshow("imgResult", imgMask)
     imgResult = cv2.bitwise_and(imgMask, imgMask, mask=mask)
-    # cv2.imshow("imgResult", imgResult)
     return imgResult
 
 def getContours(img, imgDraw, cThr=[100, 100], showCanny=False, minArea=1000, filter=0, draw=False):
@@ -27,10 +22,6 @@ def getContours(img, imgDraw, cThr=[100, 100], showCanny=False, minArea=1000, fi
 
     if showCanny: cv2.imshow('Canny', imgClose)
     contours, hiearchy = cv2.findContours(imgClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    # print('length of contours', len(contours))
-    # cnt = contours[0]
-    # img = cv2.drawContours(img, contours, [cnt], (0,255,0), 3)
-    # cv2.imshow("contours", cv2.resize(img, (800 ,500)))
     finalContours = []
     for i in contours:
         img = cv2.drawContours(img, i, -1, (0, 255, 0), 3)
@@ -55,7 +46,6 @@ def getContours(img, imgDraw, cThr=[100, 100], showCanny=False, minArea=1000, fi
             end_point = (x + w + b, y + h + b)
             cv2.rectangle(imgCopy, start_point, end_point, (255, 0, 255), 1)
             cv2.drawContours(imgDraw, con[4], -1,(0,0,255), 2)
-        # cv2.imshow("Things" ,imgCopy)
     return imgCopy, finalContours
 
 def getRoi(img, contours):
@@ -72,7 +62,10 @@ def roiDisplay(roiList):
         # cv2.imshow(str(x),roi)
         
 def saveText(highlightedText):
-    with open('highlightedText.csv', 'w') as f:
+    with open('static/highlightedText.csv', 'w') as f:
         for text in highlightedText:
             f.writelines(f'\n{text}')
 
+
+def cleanText(high):
+    god = high
