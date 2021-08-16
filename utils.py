@@ -49,19 +49,21 @@ def getContours(img, imgDraw, cThr=[100, 100], showCanny=False, minArea=1000, fi
     finalContours = sorted(finalContours, key=lambda x: x[1], reverse=True)
     if draw:
         for con in finalContours:
-            # print('con', con[3])
             x, y, w, h = con[3]
-            # cv2.imshow('copy', imgCopy)
-            cv2.rectangle(imgCopy, (x, y), (x + w, y + h), (255, 0, 255), 2)
+            b = 2
+            start_point =  (x - b, y - b)
+            end_point = (x + w + b, y + h + b)
+            cv2.rectangle(imgCopy, start_point, end_point, (255, 0, 255), 1)
             cv2.drawContours(imgDraw, con[4], -1,(0,0,255), 2)
-        # cv2.imshow("Things" ,imgDraw)
+        # cv2.imshow("Things" ,imgCopy)
     return imgCopy, finalContours
 
 def getRoi(img, contours):
     roiList = []
     for con in contours:
         x, y, w, h = con[3]
-        roiList.append(img[y:y + h, x:x +w])
+        b = 3
+        roiList.append(img[y - b:(y + h) + b, x -b :(x + w) + b])
     return roiList
 
 def roiDisplay(roiList):
