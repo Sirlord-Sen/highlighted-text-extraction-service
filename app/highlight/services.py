@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 
 class TextDetectService:
@@ -11,3 +12,13 @@ class TextDetectService:
         img.save(f"{img_path}/{img_title}")
 
         return img_title
+
+    @staticmethod
+    def cleanText(highlights):
+        cleanHighlights = []
+        for hi in highlights:
+            hi = hi.strip().replace('\n', " ")
+            for k in hi.split("\n"): hi = re.sub(r"[^a-zA-Z0-9.,]+", " ", k)
+            hi = hi.strip()
+            cleanHighlights.append(hi)
+        return cleanHighlights

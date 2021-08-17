@@ -8,7 +8,6 @@ load_dotenv()
 
 from app import create_app
 
-print(os.getenv('PORT'))
 app = create_app(os.getenv('ENV') or 'dev')
 
 app.app_context().push()

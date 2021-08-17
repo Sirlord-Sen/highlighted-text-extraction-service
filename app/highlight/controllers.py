@@ -1,8 +1,8 @@
-import os
 from  flask import Blueprint, request, jsonify
 
 from .services import TextDetectService
 from ..textdetect import textdetect as td
+from .handlers import BuildResponse
 
 api = Blueprint('high_detect', __name__, url_prefix='/api/v1/text_detection')
 
@@ -13,5 +13,7 @@ def textdetect():
     topic = request.form['topic_id']
     img_title = TextDetectService.saveImage(img, user, topic)
     highlightedText = td.text_detect(img_title)
-    # return jsonify({'msg': "success"})
-    return jsonify({'msg': "success", "text": highlightedText})
+    cleanHighlights = TextDetectService.cleanText(highlightedText)
+    response = BuildResponse(user, cleanHighlights)
+    
+    return jsonify(response)
