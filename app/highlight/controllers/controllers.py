@@ -1,8 +1,9 @@
 from  flask import Blueprint, request, jsonify
+import json
 
-from .services import TextDetectService
-from ..textdetect import textdetect as td
-from .handlers import BuildResponse
+from ...textdetect import textdetect as td
+from ..services.services import TextDetectService
+from ..handlers.handlers import BuildResponse
 
 api = Blueprint('high_detect', __name__, url_prefix='/api/v1/text_detection')
 
@@ -16,4 +17,5 @@ def textdetect():
     cleanHighlights = TextDetectService.cleanText(highlightedText)
     response = BuildResponse(user, cleanHighlights)
     
+    # return jsonify({"response": "success"})
     return jsonify(response)
